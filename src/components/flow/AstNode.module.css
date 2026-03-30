@@ -25,28 +25,40 @@
   border-color: #3b82f6;
   background: linear-gradient(135deg, #1e2a4a 0%, #1a1d2e 100%);
 }
-.directory .emoji { color: #60a5fa; }
+
+.directory .emoji {
+  color: #60a5fa;
+}
 
 /* 파일 */
 .file {
   border-color: #10b981;
   background: linear-gradient(135deg, #1a2e25 0%, #1a1d2e 100%);
 }
-.file .emoji { color: #34d399; }
+
+.file .emoji {
+  color: #34d399;
+}
 
 /* 클래스 */
 .class {
   border-color: #f59e0b;
   background: linear-gradient(135deg, #2e2510 0%, #1a1d2e 100%);
 }
-.class .emoji { color: #fbbf24; }
+
+.class .emoji {
+  color: #fbbf24;
+}
 
 /* 함수 */
 .function {
   border-color: #a855f7;
   background: linear-gradient(135deg, #251a3a 0%, #1a1d2e 100%);
 }
-.function .emoji { color: #c084fc; }
+
+.function .emoji {
+  color: #c084fc;
+}
 
 .header {
   display: flex;
@@ -80,7 +92,7 @@
 .metaTag {
   font-size: 10px;
   color: #94a3b8;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.06);
   border-radius: 4px;
   padding: 1px 5px;
 }
