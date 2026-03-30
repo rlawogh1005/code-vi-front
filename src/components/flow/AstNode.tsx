@@ -15,10 +15,25 @@ const NODE_CONFIG: Record<FlowNodeType, { emoji: string; className: string }> = 
 function AstNode({ data: rawData, selected }: NodeProps) {
   const data = rawData as FlowNodeData;
   const config = NODE_CONFIG[data.nodeType] ?? { emoji: '🔷', className: '' };
+  const { metrics } = data;
 
   return (
     <div className={`${styles.node} ${config.className} ${selected ? styles.selected : ''}`}>
       <Handle type="target" position={Position.Top} className={styles.handle} />
+
+      {/* DIT Badge (상속 깊이) */}
+      {data.nodeType === 'class' && metrics && (
+        <div className={styles.ditBadge} title="Depth of Inheritance Tree">
+          D{metrics.dit}
+        </div>
+      )}
+
+      {/* NOC Badge (자식 수) */}
+      {data.nodeType === 'class' && metrics && metrics.noc > 0 && (
+        <div className={styles.nocBadge} title={`Number of Children: ${metrics.noc}`}>
+          N{metrics.noc}
+        </div>
+      )}
 
       <div className={styles.header}>
         <span className={styles.emoji}>{config.emoji}</span>
@@ -40,6 +55,34 @@ function AstNode({ data: rawData, selected }: NodeProps) {
           {data.meta.fileCount != null && (
             <span className={styles.metaTag}>{data.meta.fileCount} files</span>
           )}
+        </div>
+      )}
+
+      {/* CK Metrics Grid (클래스 전용) */}
+      {data.nodeType === 'class' && metrics && (
+        <div className={styles.metricsGrid}>
+          <div className={styles.metricItem} title="Coupling Between Objects">
+            <span className={styles.metricLabel}>CBO</span>
+            <span className={styles.metricValue}>{metrics.cbo}</span>
+          </div>
+          <div className={styles.metricItem} title="Response For a Class">
+            <span className={styles.metricLabel}>RFC</span>
+            <span className={styles.metricValue}>{metrics.rfc}</span>
+          </div>
+          <div className={styles.metricItem} title="Lack of Cohesion in Methods">
+            <span className={`${styles.metricLabel} ${metrics.lcom > 50 ? styles.warn : ''}`}>LCOM</span>
+            <span className={styles.metricValue}>{metrics.lcom}</span>
+          </div>
+        </div>
+      )}
+
+      {/* 가로형 WMC 게이지 (복잡도) */}
+      {data.nodeType === 'class' && metrics && (
+        <div className={styles.wmcBarWrapper} title={`Weighted Methods (Complexity): ${metrics.wmc}`}>
+          <div 
+            className={styles.wmcBar} 
+            style={{ width: `${Math.min(metrics.wmc * 5, 100)}%` }} 
+          />
         </div>
       )}
 

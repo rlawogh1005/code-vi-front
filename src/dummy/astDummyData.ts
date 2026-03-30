@@ -83,6 +83,7 @@ export const dummySnapshotDetail: AstSnapshot = {
               parentFunctionId: null,
               createdAt: '2026-03-24T05:03:28.000Z',
               updatedAt: '2026-03-24T05:03:28.000Z',
+              metrics: { cbo: 3, rfc: 8, lcom: 65, wmc: 12, dit: 2, noc: 0 },
               methods: [
                 {
                   id: 3002,
@@ -159,6 +160,7 @@ export const dummySnapshotDetail: AstSnapshot = {
               parentFunctionId: null,
               createdAt: '2026-03-24T05:03:28.000Z',
               updatedAt: '2026-03-24T05:03:28.000Z',
+              metrics: { cbo: 1, rfc: 4, lcom: 10, wmc: 5, dit: 1, noc: 2 },
               methods: [
                 {
                   id: 3004,
@@ -180,5 +182,9 @@ export const dummySnapshotDetail: AstSnapshot = {
         }
       ]
     }
+  ],
+  methodCalls: [
+    { callerId: 3002, calleeId: 3004 }, // getHello() calls processLogic()
+    { callerId: 3003, calleeId: 3004 }  // postData() calls processLogic()
   ]
 };

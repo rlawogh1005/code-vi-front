@@ -49,6 +49,7 @@ export function astSnapshotToFlow(snapshot: AstSnapshot): FlowResult {
       target,
       type: 'smoothstep',
       animated: false,
+      edgeType: 'hierarchy',
       style: { stroke: '#4a5568', strokeWidth: 1.5 },
     });
   };
@@ -107,6 +108,7 @@ export function astSnapshotToFlow(snapshot: AstSnapshot): FlowResult {
           data: {
             label: cls.name,
             nodeType: 'class',
+            metrics: cls.metrics,
             meta: {
               startLine: cls.startLine,
               endLine: cls.endLine,
@@ -162,6 +164,21 @@ export function astSnapshotToFlow(snapshot: AstSnapshot): FlowResult {
   // flat → tree
   const roots = buildDirectoryTree(snapshot.directories);
   roots.forEach((root) => processDir(root));
+
+  // Add method call edges
+  if (snapshot.methodCalls) {
+    snapshot.methodCalls.forEach((call) => {
+      edges.push({
+        id: `call-${call.callerId}-${call.calleeId}`,
+        source: `func-${call.callerId}`,
+        target: `func-${call.calleeId}`,
+        type: 'smoothstep',
+        animated: true,
+        edgeType: 'call',
+        style: { stroke: '#f59e0b', strokeWidth: 2, strokeDasharray: '4 4' },
+      });
+    });
+  }
 
   return { nodes, edges };
 }

@@ -7,6 +7,20 @@
 //   - entries with name==='class' are Tree-sitter artifacts → filter out
 // ============================================================
 
+export interface AstClassMetrics {
+  cbo: number;
+  rfc: number;
+  lcom: number;
+  wmc: number;
+  dit: number;
+  noc: number;
+}
+
+export interface AstMethodCall {
+  callerId: number;
+  calleeId: number;
+}
+
 /** 클래스 메서드 또는 파일-레벨 함수 */
 export interface AstFunction {
   id: number;
@@ -37,6 +51,7 @@ export interface AstClass {
   methods: AstFunction[];       // ⚠️ 'functions'가 아닌 'methods'
   parentClassId: number | null;
   parentFunctionId: number | null;
+  metrics?: AstClassMetrics;
 }
 
 /** 디렉토리 내 파일 */
@@ -62,13 +77,13 @@ export interface AstDirectory {
   files: AstFile[];
 }
 
-/** 스냅샷 최상위 응답 */
 export interface AstSnapshot {
   id: number;
   createdAt: string;
   updatedAt: string;
   teamProjectId: number;
   directories: AstDirectory[];  // flat 배열
+  methodCalls?: AstMethodCall[]; // 메서드 호출 관계
 }
 
 /** flat 배열 → 트리 변환 후 사용하는 타입 */

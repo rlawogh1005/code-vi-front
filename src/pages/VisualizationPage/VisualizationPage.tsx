@@ -115,6 +115,40 @@ export default function VisualizationPage() {
                   )}
                 </div>
               )}
+
+              {selectedNode.nodeType === 'class' && selectedNode.metrics && (
+                <div className={styles.metricsDetail}>
+                  <div className={styles.metricsSectionTitle}>CK Software Metrics</div>
+                  <div className={styles.detailMeta}>
+                    <div className={styles.metaRow} title="Coupling Between Objects: 클래스 간 결합도">
+                      <span className={styles.metaKey}>CBO (결합도)</span>
+                      <span className={styles.metaVal}>{selectedNode.metrics.cbo}</span>
+                    </div>
+                    <div className={styles.metaRow} title="Response For a Class: 클래스 응답 집합">
+                      <span className={styles.metaKey}>RFC (응답성)</span>
+                      <span className={styles.metaVal}>{selectedNode.metrics.rfc}</span>
+                    </div>
+                    <div className={styles.metaRow} title="Lack of Cohesion in Methods: 메서드 응집도 부족">
+                      <span className={`${styles.metaKey} ${selectedNode.metrics.lcom > 50 ? styles.warn : ''}`}>
+                        LCOM (응집력 저하)
+                      </span>
+                      <span className={styles.metaVal}>{selectedNode.metrics.lcom}</span>
+                    </div>
+                    <div className={styles.metaRow} title="Weighted Methods per Class: 클래스 당 가중 메서드 (복잡도)">
+                      <span className={styles.metaKey}>WMC (가중 복잡도)</span>
+                      <span className={styles.metaVal}>{selectedNode.metrics.wmc}</span>
+                    </div>
+                    <div className={styles.metaRow} title="Depth of Inheritance Tree: 상속 계층 깊이">
+                      <span className={styles.metaKey}>DIT (상속 깊이)</span>
+                      <span className={styles.metaVal}>{selectedNode.metrics.dit}</span>
+                    </div>
+                    <div className={styles.metaRow} title="Number of Children: 자식 클래스 수">
+                      <span className={styles.metaKey}>NOC (자식 수)</span>
+                      <span className={styles.metaVal}>{selectedNode.metrics.noc}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <div className={styles.panelEmpty}>
